@@ -460,7 +460,12 @@
 
       const data = await res.json();
       bubble.classList.remove('typing');
-      bubble.textContent = data.output || "Sorry, I couldn't process your request.";
+      const raw = data.output || "Sorry, I couldn't process your request.";
+      bubble.innerHTML = raw
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\n/g, '<br>');
       saveHistory();
       scroll(botRow);
 
